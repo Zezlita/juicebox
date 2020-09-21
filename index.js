@@ -12,5 +12,5 @@ app.get('/juicebox',async (req, res, next) => {
 })
 
 app.listen(3000,function(){
-    console.log('listening on port 8000')
+    console.log('listening on port 3000')
 })
