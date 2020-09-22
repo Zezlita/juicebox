@@ -148,18 +148,29 @@ async function createTags(tagList){
     try{
         await client.query(`
         INSERT INTO tags 
-        VALUES ($1),($2),($3)
-        ON CONFLICT ("insertValues") DO NOTHING
-        RETURNING*;
-        `[insertValues]);
+        VALUES (${insertValues})
+        ON CONFLICT (name) DO NOTHING; 
+        `,tagList);
 
-        await client.query(`
+        const {rows:tags} = await client.query(`
         SELECT * FROM tags
-        WHERE "post_tag"
-        IN ($1, $2, $3);
-        RETURNING*;
-        `[selectValues]);
+        WHERE name
+        IN (${selectValues});
+        `,tagList);
+        return tags;
     }catch(error){
+        throw error;
+    }
+}
+
+async function getAllTags(){
+    try{
+        const { rows } = await client.query(`
+        SELECT*
+        FROM tags;
+        `);
+        return {rows}
+    } catch(error){
         throw error;
     }
 }
@@ -266,6 +277,7 @@ module.exports = {
     getAllPosts,
     updatePost,
     createTags,
+    getAllTags,
     getPostsByUser,
     createPostTag,
     getPostById,
