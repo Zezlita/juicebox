@@ -1,18 +1,19 @@
 const { 
     client,
     createUser,
-    getAllUsers,
     updateUser,
+    getAllUsers,
     getUserById,
     createPost,
-    getAllPosts,
     updatePost,
-    createTags,
-    getPostsByUser,
-    createPostTag,
+    getAllPosts,
     getPostById,
+    getPostsByUser,
+    getPostsByTagName,
+    createTags,
+    getAllTags,
+    createPostTag,
     addTagsToPost,
-    getPostByTagName,
 } = require('./index');
 
 
