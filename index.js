@@ -24,7 +24,7 @@ server.use((req, res, next) => {
 
 
 //ADDED DURING LECTURE, instead of api index
-apiRouter.use((error, req, res, next) => {
+server.use((error, req, res, next) => {
   res.send(error);
 });
 

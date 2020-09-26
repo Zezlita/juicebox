@@ -24,19 +24,19 @@ usersRouter.post('/login', async (req, res, next) => {
 
   if (!username || !password){
     next({
-      name: "MissingCredentialsError",
+      name: "Missing Credentials Error",
       message: "Please supply both a username and password"
     });
   }
   try{
     const user = await getUserByUsername(username);
     if (user && user.password == password){
-      const key = jwt.sign(user, JWT_SECRET);
+      const key = jwt.sign({id: user.id, username}, JWT_SECRET);
       console.log('key: ',key)
       res.send({message: "you're logged in", key});
     } else {
       next({ 
-        name: 'IncorrectCredentialsError', 
+        name: 'Incorrect Credentials Error', 
         message: 'Username or password is incorrect'
     });
   }
@@ -52,7 +52,7 @@ usersRouter.post('/register', async (req, res, next) =>{
     const _user = await getUserByUsername(username);
     if(_user){
       next({
-        name: 'UserExistsError',
+        name: 'User Exists Error',
         message: 'A user by that username already exists'
       });
     }

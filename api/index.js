@@ -13,18 +13,18 @@ const { JWT_SECRET } = process.env;
 
 // set `req.user` if possible
 apiRouter.use(async (req, res, next) => {
-  console.log('req', req.body)
   const prefix = 'Bearer ';
   const auth = req.header('Authorization');
-
+  
   if (!auth) { // nothing to see here
     next();
   } else if (auth.startsWith(prefix)) {
     const token = auth.slice(prefix.length);
-
+    
     try {
       const { id } = jwt.verify(token, JWT_SECRET);
 
+      console.log('id', id)
       if (id) {
         req.user = await getUserById(id);
         next();
