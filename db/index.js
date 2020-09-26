@@ -191,7 +191,7 @@ async function getAllPosts(){
         const {rows: postIds} = await client.query(`
             SELECT posts.id
             FROM posts
-            JOIN post_tags ON post.id=post_tags."postId"
+            JOIN post_tags ON posts.id=post_tags."postId"
             JOIN tags ON tags.id=post_tags."tagId"
             WHERE tags.name=$1;
             `, [tagName]);
@@ -272,6 +272,20 @@ async function getAllTags(){
     }
 }
 
+async function getUserByUsername(username){
+    try{
+        const {rows:[user]} = await client.query(`
+        SELECT *
+        FROM users
+        WHERE username=$1
+      `, [username]);
+  
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
+
 module.exports = {
     client,
     createUser,
@@ -285,9 +299,10 @@ module.exports = {
     getPostsByUser,
     getPostsByTagName,
     createTags,
-    getAllTags,
     createPostTag,
     addTagsToPost,
+    getAllTags,
+    getUserByUsername,
 };
 
 
