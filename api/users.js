@@ -1,16 +1,16 @@
 const express = require('express');
-const usersRouter = express.Router();
-const jwt = require ('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const {JWT_SECRET} = process.env;
-const {getAllUsers, getUserByUsername} = require('../db'); 
+const usersRouter = express.Router();
+const {getAllUsers, getUserByUsername, createUser} = require('../db'); 
 
 usersRouter.use((req, res, next) => {
   console.log("A request is being made to /users");
-
+  
   next();
 });
 
-usersRouter.get('/', async (req, res) =>{
+usersRouter.get('/', async (req, res) => {
   const users = await getAllUsers();
 
   res.send({

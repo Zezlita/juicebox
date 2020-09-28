@@ -7,11 +7,11 @@ const {
     createPost,
     updatePost,
     getAllPosts,
+    getAllTags,
+    getPostsByTagName,
     getPostById,
     getPostsByUser,
-    getPostsByTagName,
     createTags,
-    getAllTags,
     createPostTag,
     addTagsToPost,
 } = require('./index');
@@ -47,7 +47,7 @@ async function createTables(){
         );
         CREATE TABLE posts (
             id SERIAL PRIMARY KEY,
-            "authorId" INTEGER REFERENCES users(id) NOT NULL,
+            "authorId" INTEGER REFERENCES users(id),
             title VARCHAR (255) NOT NULL,
             content TEXT NOT NULL,
             active BOOLEAN DEFAULT true
@@ -98,7 +98,7 @@ async function createInitialPosts(){
             authorId: sandra.id,
             title: "How does this work?",
             content:"Seriously, does this even do anything?",
-            tags: ["#happy", "#worse-day-ever"]
+            tags: ["#nothappy", "#worse-day-ever"]
         });
         await createPost({
             authorId: glamgal.id,

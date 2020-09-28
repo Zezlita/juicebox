@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const express = require('express');
 const server = express();
 const bodyParser = require('body-parser');
@@ -24,13 +24,10 @@ server.use((req, res, next) => {
 
 
 //ADDED DURING LECTURE, instead of api index
-server.use((error, req, res, next) => {
+apiRouter.use((error, req, res, next) => {
   res.send(error);
 });
 
-// app.get('*',(req, res, next) =>{
-//   res.status(404).send('Opps!');
-// })
 
 server.listen(PORT, () => {
     console.log('The server is up on port', PORT)
